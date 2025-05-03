@@ -200,10 +200,19 @@ public class autoRedSpecimenFaster4 extends OpMode {
                     waitFor(100);
                     follower.followPath(redPark);
                     redPark.setLinearHeadingInterpolation(backUp.getHeading(), Math.toRadians(180));
-                    setPathState(15);
+                    robot.depoHslide.setInit();
+                    waitFor(200);
+                    robot.intakeTilt.setOut();
+                    robot.depoWrist.setIn();
+                    robot.claw.setOpen();
+                    robot.clawBigTilt.setTransfer();
+                    robot.clawSmallTilt.setTransfer();
+                    robot.vSlides.moveEncoderTo(robot.vSlides.mid-50, 1f);
+                    vslideGoBottom = true;
+                    setPathState(16);
                 }
                 break;
-            case 15:
+            /*case 15:
                 if(!follower.isBusy()) {
                     robot.depoHslide.setInit();
                     robot.intakeTilt.setOut();
@@ -215,7 +224,7 @@ public class autoRedSpecimenFaster4 extends OpMode {
                     vslideGoBottom = true;
                     setPathState(16);
                 }
-                break;
+                break;*/
             case 16:
                 if(!follower.isBusy()) {
                     waitFor(100);
@@ -238,7 +247,7 @@ public class autoRedSpecimenFaster4 extends OpMode {
                     follower.followPath(nextRotate);
                     setPathState(19);
                 }
-                else if (pathTimer.milliseconds()>7000) {
+                else if (pathTimer.milliseconds()>5000) {
                     pathTimer.reset();
                     robot.intake.off();
                     robot.intakeTilt.setTransfer();
@@ -269,6 +278,13 @@ public class autoRedSpecimenFaster4 extends OpMode {
                     if (robot.sensorF.getColor() == colorSensor.Color.RED) {
                         follower.followPath(toSample2);
                         setPathState(22);
+                    }
+                    else if (pathTimer.milliseconds()>5000) {
+                        pathTimer.reset();
+                        robot.intake.off();
+                        robot.intakeTilt.setTransfer();
+                        hSlideGoBottom = true;
+                        setPathState(23);
                     }
                     break;
                 }

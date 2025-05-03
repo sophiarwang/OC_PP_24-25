@@ -95,16 +95,16 @@ public class autoBlueSpecimenFaster4 extends OpMode {
         backUp = new Pose(119,68, Math.PI);
         goPark = new Pose(118,84, 3*Math.PI/4);
         goRotate = new Pose(115,93, Math.PI/4);
-        bitForward = new Pose(116,95, 2*Math.PI/3);
+        bitForward = new Pose(117,98, 2*Math.PI/3);
         bitBack = new Pose(114,93, Math.PI/4);
         toSample = new Pose(115,98, 2*Math.PI/3);
         secondScore = new Pose(114,93, Math.PI/4);
         bitCloser = new Pose(131,96, Math.PI);
         bitBitBack = new Pose(109,63, Math.PI);
-        thirdSample = new Pose(132,96, Math.PI);
-        getThirdSample = new Pose(109,60, Math.PI);
+        thirdSample = new Pose(131,96, Math.PI);
+        getThirdSample = new Pose(109,65, Math.PI);
         thirdScore = new Pose(131,96, Math.PI);
-        thirdScoreCloser = new Pose(110,69, Math.PI);
+        thirdScoreCloser = new Pose(109,67, Math.PI);
         fourthScore = new Pose(129,98, Math.PI);
         fourthScoreCloser = new Pose(114,64, Math.PI);
 
@@ -200,10 +200,19 @@ public class autoBlueSpecimenFaster4 extends OpMode {
                     waitFor(100);
                     follower.followPath(redPark);
                     redPark.setLinearHeadingInterpolation(backUp.getHeading(), Math.toRadians(180));
-                    setPathState(15);
+                    robot.depoHslide.setInit();
+                    waitFor(200);
+                    robot.intakeTilt.setOut();
+                    robot.depoWrist.setIn();
+                    robot.claw.setOpen();
+                    robot.clawBigTilt.setTransfer();
+                    robot.clawSmallTilt.setTransfer();
+                    robot.vSlides.moveEncoderTo(robot.vSlides.mid-50, 1f);
+                    vslideGoBottom = true;
+                    setPathState(16);
                 }
                 break;
-            case 15:
+            /*case 15:
                 if(!follower.isBusy()) {
                     robot.depoHslide.setInit();
                     robot.intakeTilt.setOut();
@@ -215,7 +224,7 @@ public class autoBlueSpecimenFaster4 extends OpMode {
                     vslideGoBottom = true;
                     setPathState(16);
                 }
-                break;
+                break;*/
             case 16:
                 if(!follower.isBusy()) {
                     waitFor(100);
@@ -238,7 +247,7 @@ public class autoBlueSpecimenFaster4 extends OpMode {
                     follower.followPath(nextRotate);
                     setPathState(19);
                 }
-                else if (pathTimer.milliseconds()>7000) {
+                else if (pathTimer.milliseconds()>5000) {
                     pathTimer.reset();
                     robot.intake.off();
                     robot.intakeTilt.setTransfer();
@@ -393,6 +402,7 @@ public class autoBlueSpecimenFaster4 extends OpMode {
                     robot.vSlides.moveEncoderTo(robot.vSlides.mid+90, 1.2f);
                     robot.claw.setClose();
                     robot.clawBigTilt.setOut();
+                    waitFor(200);
                     robot.depoHslide.setOut();
                     robot.clawSmallTilt.setFlat();
                     setPathState(33);
@@ -445,7 +455,6 @@ public class autoBlueSpecimenFaster4 extends OpMode {
         autoPath();
         telemetry.addLine("TValue: "+follower.getCurrentTValue());
         telemetry.addLine("Path: " + pathState);
-        telemetry.addLine("pathTimer: " + pathTimer);
         telemetry.addLine("vLimit" + vlimitswitch.getState());
         telemetry.addLine("hLimit" + hlimitswitch.getState());
 

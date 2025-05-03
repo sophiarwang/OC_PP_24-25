@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 public class clawSmallTilt {
     public OcServo clawSmallTilt;
     public VoltageSensor intakeVolt;
-    public static final float INIT = 127f;//230f;
-    public static final float TRANSFER = 122f;//130f;//188f;//183f;//177f;//171f;//175f;
+    public static final float INIT = 128f;//230f;
+    public static final float TRANSFER = 128f;//130f;//188f;//183f;//177f;//171f;//175f;
     public static final float FLAT = 93f; //TODO: This is transfer Sequence
     public static final float SPEC = 83f;//140f;//117f;//158f; //TODO: This is specimen
-    public static final float BUCKET = 152f;//175f;//52f;
+    public static final float BUCKET = 149f;//175f;//52f;
     public static final float WALL = 133f;//138f;
     public static final float MOVE_TO_WALL = 97f;
     public static final float LEFT = 172f;
